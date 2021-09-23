@@ -8,6 +8,7 @@ This addon attempts to replicate the Heads Up Display feature from Half-Life mod
 +   Ammunition indicator
 +   Weapon selector
 +   Item inventory
++   Death camera
 
 ## Customization includes
 +   Toggle HUD
