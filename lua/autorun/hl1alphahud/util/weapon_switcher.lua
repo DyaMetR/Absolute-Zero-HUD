@@ -298,16 +298,15 @@ end
 -- paint into HUD
 hook.Add('HUDPaint', 'hl1alphahud_switcher', function()
   drawHUD()
-  return true
 end)
 
 -- paint into overlay if the camera is out
---[[hook.Add('DrawOverlay', 'hl1alphahud_overlay', function()
+hook.Add('DrawOverlay', 'hl1alphahud_overlay', function()
   if not LocalPlayer or not LocalPlayer().GetActiveWeapon then return end -- avoid pre-init errors
   local weapon = LocalPlayer():GetActiveWeapon()
   if not IsValid(weapon) or weapon:GetClass() ~= CAMERA or gui.IsGameUIVisible() then return end
   drawHUD()
-end)]]
+end)
 
 -- select
 UnintrusiveBindPress.add('hl1alphahud', function(_player, bind, pressed, code)
