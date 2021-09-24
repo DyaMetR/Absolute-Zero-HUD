@@ -11,7 +11,7 @@ if SERVER then return end -- do not run on server
 local MAX_SLOTS = 6 -- maximum number of weapon slots
 
 -- Constants
-local PHYSICS_GUN, CAMERA = 'weapon_physics', 'gmod_camera'
+local PHYSICS_GUN, CAMERA = 'weapon_physgun', 'gmod_camera'
 local SLOT, INV_PREV, INV_NEXT, ATTACK, ATTACK2 = 'slot', 'invprev', 'invnext', '+attack', '+attack2'
 
 -- Variables
@@ -316,7 +316,7 @@ UnintrusiveBindPress.add('hl1alphahud', function(_player, bind, pressed, code)
 
   -- check whether the physics gun is in use
   local weapon = LocalPlayer():GetActiveWeapon()
-  if IsValid(weapon) and weapon:GetClass() == PHYSICS_GUN and LocalPlayer():KeyDown(IN_ATTACK) then return end
+  if IsValid(weapon) and weapon:GetClass() == PHYSICS_GUN and LocalPlayer():KeyDown(IN_ATTACK) and (bind == INV_PREV or bind == INV_NEXT) then return true end
 
   -- move backwards
   if bind == INV_PREV then
