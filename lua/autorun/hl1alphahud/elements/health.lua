@@ -18,6 +18,7 @@ local YELLOW_MARK = 70 --70
 local BRIGHTNESS = 255 --125
 local RED = Color(245, 8, 8)
 local DEFAULT_ALPHA = 1
+local EMPTY_ALPHA = .2
 local NUMBER_ALPHA = 130 / 255
 local HIGHLIGHT = 'health'
 
@@ -51,6 +52,9 @@ local function DrawBattery(x, y, colour, style, scale, alpha)
   local battery_empty, battery_fill, offset = G_BATTERY_EMPTY, G_BATTERY_FILL, 6
   if style == HL1AHUD.HUD_E3_98 then battery_empty = BATTERY_EMPTY; battery_fill = BATTERY_FILL; offset = 13 end
 
+  -- armour looks empty when dead
+  if not LocalPlayer():Alive() then armour = 0 end
+
   -- draw background
   HL1AHUD.DrawSprite(battery_empty, x, y, colour, alpha, scale)
 
@@ -75,8 +79,16 @@ local function DrawGreenHealth(x, y, style, scale)
   y = y - data.h * (scale - 1)
 
   -- draw armour
-  if (LocalPlayer():Armor() > 0 or HL1AHUD.ShouldBatteryAlwaysDraw() or style == HL1AHUD.HUD_E3_98) then
-    DrawBattery(x, y - (35 * scale), colour, style, scale * 1)
+  if (style ~= HL1AHUD.HUD_EARLY) then
+    local alpha = DEFAULT_ALPHA
+
+    -- reduce alpha if there's no armour left
+    if style == HL1AHUD.HUD_GREEN and not LocalPlayer():Alive() then
+      alpha = EMPTY_ALPHA
+    end
+
+    -- draw battery
+    DrawBattery(x, y - (35 * scale), colour, style, scale * 1, alpha)
   end
 
   -- move health digits

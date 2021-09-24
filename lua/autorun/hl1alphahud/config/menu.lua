@@ -21,6 +21,12 @@ hook.Add( 'PopulateToolMenu', 'hl1ahud_menu', function()
     combobox:AddChoice('E3 1998', 2)
 
     panel:AddControl( 'CheckBox', {
+  		Label = 'Visible without Suit',
+      Command = 'hl1ahud_no_suit'
+  		}
+  	)
+
+    panel:AddControl( 'CheckBox', {
   		Label = 'Always show battery (green variants)',
       Command = 'hl1ahud_nouse_battery'
   		}

@@ -10,6 +10,10 @@ if SERVER then return end -- do not run on server
 -- Configuration
 local MAX_SLOTS = 6 -- maximum number of weapon slots
 
+-- Constants
+local PHYSICS_GUN, CAMERA = 'weapon_physics', 'gmod_camera'
+local SLOT, INV_PREV, INV_NEXT, ATTACK, ATTACK2 = 'slot', 'invprev', 'invnext', '+attack', '+attack2'
+
 -- Variables
 local curSlot = 0 -- current slot selected
 local curPos = 0 -- current weapon position selected
@@ -261,12 +265,10 @@ end
   Implementation
 ]]--------------------------------------------------------------------
 
-local CAMERA = 'gmod_camera'
-
 -- sounds
 local UNABLE = 'hl1alphahud/wpn_denyselect.wav'
 local CANCEL = 'hl1alphahud/wpn_hudoff.wav'
-local SLOT = 'hl1alphahud/wpn_hudon.wav'
+local SLOT_SELECT = 'hl1alphahud/wpn_hudon.wav'
 local MOVE = 'hl1alphahud/wpn_moveselect.wav'
 local SELECT = 'hl1alphahud/wpn_select.wav'
 
@@ -296,39 +298,44 @@ end
 -- paint into HUD
 hook.Add('HUDPaint', 'hl1alphahud_switcher', function()
   drawHUD()
+  return true
 end)
 
 -- paint into overlay if the camera is out
-hook.Add('DrawOverlay', 'hl1alphahud_overlay', function()
+--[[hook.Add('DrawOverlay', 'hl1alphahud_overlay', function()
   if not LocalPlayer or not LocalPlayer().GetActiveWeapon then return end -- avoid pre-init errors
   local weapon = LocalPlayer():GetActiveWeapon()
   if not IsValid(weapon) or weapon:GetClass() ~= CAMERA or gui.IsGameUIVisible() then return end
   drawHUD()
-end)
+end)]]
 
 -- select
 UnintrusiveBindPress.add('hl1alphahud', function(_player, bind, pressed, code)
-  if not HL1AHUD.IsEnabled() or not HL1AHUD.ShouldDrawWeaponSelector() then return end
+  if not HL1AHUD.IsEnabled() or not HL1AHUD.ShouldDrawWeaponSelector() then return end -- ignore if it shouldn't draw
   if not pressed then return end -- ignore if bind was not pressed
 
+  -- check whether the physics gun is in use
+  local weapon = LocalPlayer():GetActiveWeapon()
+  if IsValid(weapon) and weapon:GetClass() == PHYSICS_GUN and LocalPlayer():KeyDown(IN_ATTACK) then return end
+
   -- move backwards
-  if bind == 'invprev' then
+  if bind == INV_PREV then
     moveCursor(false)
     emitSound(MOVE)
     return true
   end
 
   -- move forward
-  if bind == 'invnext' then
+  if bind == INV_NEXT then
     moveCursor(true)
     emitSound(MOVE)
     return true
   end
 
   -- cycle through slot
-  if string.sub(bind, 1, 4) == 'slot' then
+  if string.sub(bind, 1, 4) == SLOT then
     if curSlot <= 0 then
-      emitSound(SLOT)
+      emitSound(SLOT_SELECT)
     else
       emitSound(MOVE)
     end
@@ -337,7 +344,7 @@ UnintrusiveBindPress.add('hl1alphahud', function(_player, bind, pressed, code)
   end
 
   -- select
-  if curSlot > 0 and bind == '+attack' then
+  if curSlot > 0 and bind == ATTACK then
     if curPos > 0 then
       emitSound(SELECT)
     else
@@ -349,7 +356,7 @@ UnintrusiveBindPress.add('hl1alphahud', function(_player, bind, pressed, code)
   end
 
   -- cancel
-  if curSlot > 0 and bind == '+attack2' then
+  if curSlot > 0 and bind == ATTACK2 then
     emitSound(CANCEL)
     curSlot = 0
     return true

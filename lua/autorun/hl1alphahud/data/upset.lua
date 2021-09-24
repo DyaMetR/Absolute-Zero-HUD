@@ -37,6 +37,7 @@ HL1AHUD.AddWeaponSprite('weapon_hlaz_rpg', 'rocketlauncher', 'rocketlauncher_sel
 HL1AHUD.AddWeaponSprite('weapon_hlaz_chumtoad', 'chumtoads', 'chumtoads_selected')
 HL1AHUD.AddWeaponDynamicIcon('weapon_hlaz_glock', function(x, y, weapon, colour, scale, selected)
   local sprite = 'pistol'
+
   -- change to silenced
   if weapon:GetSilenced() then
     sprite = 'pistol_silenced'
@@ -48,5 +49,5 @@ HL1AHUD.AddWeaponDynamicIcon('weapon_hlaz_glock', function(x, y, weapon, colour,
   end
 
   -- draw icon
-  HL1AHUD:DrawSprite(sprite, x, y, colour, nil, scale)
+  HL1AHUD.DrawSprite(sprite, x, y, colour, nil, scale)
 end)

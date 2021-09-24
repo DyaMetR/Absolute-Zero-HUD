@@ -52,9 +52,21 @@ end
 ]]--------------------------------------------------------------------
 if CLIENT then
 
+  local hadSuit = false
+
   -- Draw HUD
   hook.Add('HUDPaint', 'hl1alphahud_draw', function()
     if not HL1AHUD.IsEnabled() then return end
+
+    -- update suit status while being alive
+    if LocalPlayer():Health() > 0 then
+      hadSuit = LocalPlayer():IsSuitEquipped()
+    end
+
+    -- do not draw without the suit
+    if not HL1AHUD.ShouldDrawWithoutSuit() and not hadSuit then return end
+
+    -- get settings
     local mode, scale = HL1AHUD.GetMode(), HL1AHUD.GetScale()
 
     -- draw health and ammunition

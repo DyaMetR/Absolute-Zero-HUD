@@ -20,7 +20,7 @@ local files = {
   hud4 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640hud4'), 256, 256),
   hud5 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640hud5'), 256, 256),
   hud6 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640hud6'), 256, 256),
-  hud10 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640hud10'), 256, 64),
+  hud10 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640hud10'), 256, 256),
   hud11 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640hud11'), 256, 256),
   misc = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640hud_misc'), 24, 24)
 }
@@ -87,6 +87,8 @@ HL1AHUD.AddSprite('flash_off', files.hud11, 60, 120, 60, 60)
 HL1AHUD.AddSprite('antidote', files.hud11, 0, 180, 60, 60)
 HL1AHUD.AddSprite('adrenaline', files.hud11, 60, 180, 60, 60)
 HL1AHUD.AddSprite('radiation', files.hud11, 120, 180, 60, 60)
+HL1AHUD.AddSprite('suit_empty', files.hud1, 210, 105, 40, 40)
+HL1AHUD.AddSprite('suit_full', files.hud1, 170, 105, 40, 40)
 
 -- weapon selector
 HL1AHUD.AddSprite('highlight', files.hud3, 0, 180, 170, 45)

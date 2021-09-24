@@ -11,7 +11,7 @@ local PREFIX = 'hl1ahud_'
 local CONVARS = {
   ['enabled'] = 1,
   ['mode'] = 0,
-  ['nouse_battery'] = 1,
+  ['no_suit'] = 0,
   ['scale'] = 1,
   ['damage_scale'] = 1,
   ['health'] = 1,
@@ -54,11 +54,11 @@ function HL1AHUD.GetMode()
 end
 
 --[[------------------------------------------------------------------
-  Does the battery show when is out of energy? (on green variants)
+  Should the HUD be drawn without a suit?
   @return {boolean} should show
 ]]--------------------------------------------------------------------
-function HL1AHUD.ShouldBatteryAlwaysDraw()
-  return GetConVar(PREFIX .. 'nouse_battery'):GetBool()
+function HL1AHUD.ShouldDrawWithoutSuit()
+  return GetConVar(PREFIX .. 'no_suit'):GetBool()
 end
 
 --[[------------------------------------------------------------------
