@@ -26,12 +26,6 @@ hook.Add( 'PopulateToolMenu', 'hl1ahud_menu', function()
   		}
   	)
 
-    panel:AddControl( 'CheckBox', {
-  		Label = 'Always show battery (green variants)',
-      Command = 'hl1ahud_nouse_battery'
-  		}
-  	)
-
     panel:AddControl( 'Slider', {
       Label = 'Scale',
       Type = 'Float',
