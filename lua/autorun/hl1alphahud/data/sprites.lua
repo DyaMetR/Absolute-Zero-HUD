@@ -6,10 +6,10 @@ if SERVER then return end
 
 -- get texture files' data
 local files = {
-  pain0 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640_painmod_0'), 128, 48),
-  pain1 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640_painmod_1'), 48, 128),
-  pain2 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640_painmod_2'), 128, 48),
-  pain3 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640_painmod_3'), 48, 128),
+  pain0 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640_painmod_0'), 128, 64),
+  pain1 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640_painmod_1'), 64, 128),
+  pain2 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640_painmod_2'), 128, 64),
+  pain3 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640_painmod_3'), 64, 128),
   hud_green = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640hud_green'), 256, 128),
   hud_green1 = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640hud_green1'), 256, 128),
   hud_green_e = HL1AHUD.GenerateFileData(surface.GetTextureID('hl1alphahud/640hud_green_e'), 256, 128),
