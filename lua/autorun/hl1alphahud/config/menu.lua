@@ -63,7 +63,7 @@ hook.Add( 'PopulateToolMenu', 'hl1ahud_menu', function()
 
     panel:AddControl( 'CheckBox', {
   		Label = 'Use death camera',
-      Command = 'hl1ahud_items'
+      Command = 'hl1ahud_death'
   		}
   	)
 
