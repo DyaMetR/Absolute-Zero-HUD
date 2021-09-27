@@ -47,13 +47,14 @@ end
 
 --[[------------------------------------------------------------------
   Caches the current weapons the player has
+  @param {boolean} force update
 ]]--------------------------------------------------------------------
-local function cacheWeapons()
+local function cacheWeapons(force)
   -- get current weapons
   local weapons = LocalPlayer():GetWeapons()
 
   -- only cache when weapon count is different
-  if weaponCount == #weapons then return end
+  if not force and weaponCount == #weapons then return end
 
   -- reset cache
   for slot = 1, MAX_SLOTS do
@@ -136,10 +137,11 @@ end
   @param {number} starting slot
   @param {number} starting slot position
   @param {boolean} move forward
+  @param {boolean} move only inside the given slot
   @return {number} slot found
   @return {number} slot position found
 ]]--------------------------------------------------------------------
-local function findWeapon(slot, pos, forward)
+local function findWeapon(slot, pos, forward, inSlot)
   -- do not search if there are no weapons
   if weaponCount <= 0 then return slot, pos end
 
@@ -153,14 +155,22 @@ local function findWeapon(slot, pos, forward)
         pos = pos + 1
       else
         pos = 1
-        slot = findSlot(slot + 1, true)
+
+        -- find next slot
+        if not inSlot then
+          slot = findSlot(slot + 1, true)
+        end
       end
       weapon = cache[slot][pos] -- update current weapon
     else
       if pos > 1 then
         pos = pos - 1
       else
-        slot = findSlot(slot - 1, false)
+        -- find next slot
+        if not inSlot then
+          slot = findSlot(slot - 1, false)
+        end
+
         pos = cacheLength[slot]
       end
       weapon = cache[slot][pos] -- update current weapon
@@ -193,6 +203,12 @@ local function moveCursor(forward)
 
     -- if there are no weapons equipped, start at the first slot
     if IsValid(weapon) then
+      -- make sure weapon is on the cache
+      if not weaponPos[weapon] then
+        cacheWeapons(true)
+      end
+
+      -- get weapon information
       curSlot = weapon:GetSlot() + 1
       curPos = weaponPos[weapon]
     else
@@ -217,32 +233,28 @@ local function cycleSlot(slot)
     return
   end
 
+  -- position to search from
+  local pos = curPos
+
   -- if current slot is out of bounds
   if curSlot <= 0 then
     local weapon = LocalPlayer():GetActiveWeapon()
 
     -- if there are no weapons equipped, start at the first pos
     if IsValid(weapon) and weapon:GetSlot() == slot - 1 then
-      curPos = weaponPos[weapon] - 1
+      pos = weaponPos[weapon] - 1
     else
-      curPos = 0
+      pos = 0
     end
-
-    curSlot = slot
   else
-    -- if the slot is different from what it was, reset position
+    -- if the slot was different, reset pos
     if curSlot ~= slot then
-      curPos = 0
-      curSlot = slot
+      pos = 0
     end
   end
 
-  -- cycle through slot
-  if curPos < cacheLength[curSlot] then
-    curPos = curPos + 1
-  else
-    curPos = 1
-  end
+  -- search for weapon
+  curSlot, curPos = findWeapon(slot, pos, true, true)
 end
 
 --[[------------------------------------------------------------------
@@ -258,7 +270,7 @@ end
   Whether the weapon selector is visible to the user
 ]]--------------------------------------------------------------------
 function HL1AHUD.IsWeaponSelectorVisible()
-  return HL1AHUD.IsEnabled() and HL1AHUD.ShouldDrawWeaponSelector() and curSlot > 0
+  return HL1AHUD.IsEnabled() and HL1AHUD.ShouldDrawWeaponSelector() and (LocalPlayer and LocalPlayer().Alive and LocalPlayer():Alive()) and curSlot > 0
 end
 
 --[[------------------------------------------------------------------
