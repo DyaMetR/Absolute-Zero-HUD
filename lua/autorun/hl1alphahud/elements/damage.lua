@@ -107,7 +107,7 @@ if SERVER then
 
   -- Process the damage taken
   hook.Add('EntityTakeDamage', 'hl1alphahud_damage', function(_player, dmginfo)
-    if not _player:IsPlayer() or not _player:Alive() or not IsValid(dmginfo:GetAttacker()) or dmginfo:GetDamage() <= 0 then return end
+    if not _player:IsPlayer() or not _player:Alive() or not IsValid(dmginfo:GetAttacker()) or dmginfo:GetDamage() < 1 then return end
 
     local origin = dmginfo:GetAttacker():GetPos() -- position of the attacker
     local noHeight = Vector(_player:GetPos().x, _player:GetPos().y, 0) -- ignore height, this is only for the direction
