@@ -109,7 +109,7 @@ if SERVER then
 
   -- detect damage type inflicted
   hook.Add('EntityTakeDamage', 'hl1alphahud_hazards', function(_player, dmginfo)
-    if not _player:IsPlayer() or not _player:Alive() or dmginfo:GetDamage() < 1 then return end -- players only
+    if not _player:IsPlayer() or not _player:Alive() or math.Round(dmginfo:GetDamage()) <= 0 then return end -- players only
     -- send new hazard
     net.Start(NET)
     net.WriteInt(dmginfo:GetDamageType(), 32)
