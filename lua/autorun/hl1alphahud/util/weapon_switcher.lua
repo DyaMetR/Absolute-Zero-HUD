@@ -239,6 +239,10 @@ local function cycleSlot(slot)
   -- if current slot is out of bounds
   if curSlot <= 0 then
     local weapon = LocalPlayer():GetActiveWeapon()
+    -- make sure weapon is on the cache
+    if not weaponPos[weapon] then
+      cacheWeapons(true)
+    end
 
     -- if there are no weapons equipped, start at the first pos
     if IsValid(weapon) and weapon:GetSlot() == slot - 1 then
