@@ -79,7 +79,7 @@ local function DrawGreenHealth(x, y, style, scale)
   y = y - data.h * (scale - 1)
 
   -- draw armour
-  if (style ~= HL1AHUD.HUD_EARLY) then
+  if style == HL1AHUD.HUD_GREEN or style == HL1AHUD.HUD_E3_98 then
     local alpha = DEFAULT_ALPHA
 
     -- reduce alpha if there's no armour left
@@ -149,9 +149,9 @@ end
 function HL1AHUD.DrawHealth(style, scale)
   if not HL1AHUD.ShouldDrawHealth() then return end
   scale = scale or 1
-  if style < HL1AHUD.HUD_E3_98 then
-    DrawGreenHealth(14, ScrH() - 61, style, scale)
-  else
+  if style == HL1AHUD.HUD_E3_98 then
     DrawE398Health(11, ScrH() - 44, scale)
+  else
+    DrawGreenHealth(14, ScrH() - 61, style, scale)
   end
 end

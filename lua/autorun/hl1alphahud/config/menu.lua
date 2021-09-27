@@ -19,6 +19,7 @@ hook.Add( 'PopulateToolMenu', 'hl1ahud_menu', function()
     combobox:AddChoice('Default', 0)
     combobox:AddChoice('Early alpha', 1)
     combobox:AddChoice('E3 1998', 2)
+    combobox:AddChoice('Default without battery icon', 3)
 
     panel:AddControl( 'CheckBox', {
   		Label = 'Visible without Suit',

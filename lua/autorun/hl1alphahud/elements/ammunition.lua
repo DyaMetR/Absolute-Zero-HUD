@@ -131,9 +131,9 @@ end
 function HL1AHUD.DrawAmmunition(style, scale)
   if not HL1AHUD.ShouldDrawAmmo() then return end
   if not IsValid(LocalPlayer():GetActiveWeapon()) or (LocalPlayer():GetActiveWeapon():GetPrimaryAmmoType() <= 0 and LocalPlayer():GetActiveWeapon():GetSecondaryAmmoType() <= 0) then return end
-  if style < HL1AHUD.HUD_E3_98 then
-    DrawGreenAmmo(ScrW() - 16, ScrH() - 55, style, scale)
-  else
+  if style == HL1AHUD.HUD_E3_98 then
     DrawE398Ammo(ScrW() - 21, ScrH() - 44, scale)
+  else
+    DrawGreenAmmo(ScrW() - 16, ScrH() - 55, style, scale)
   end
 end

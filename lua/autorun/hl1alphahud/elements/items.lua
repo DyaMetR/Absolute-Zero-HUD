@@ -59,14 +59,14 @@ function HL1AHUD.DrawItemTray(x, y, mode, scale)
   end
 
   -- displace the whole tray when using Early version
-  if mode == HL1AHUD.HUD_EARLY then y = y + SIZE * scale end
+  if mode == HL1AHUD.HUD_EARLY or mode == HL1AHUD.HUD_GREEN_NO_BATTERY then y = y + SIZE * scale end
 
   -- draw tray
   local tray = HL1AHUD.GetItemTray()
   for pos, item in pairs(tray) do
     y = y - SIZE * scale
     -- when using Early version, we need to draw here the armour
-    if mode == HL1AHUD.HUD_EARLY and pos == math.min(5, #tray) then
+    if (mode == HL1AHUD.HUD_EARLY or mode == HL1AHUD.HUD_GREEN_NO_BATTERY) and pos == math.min(5, #tray) then
       drawArmour(x, y, colour, scale)
       y = y - (SIZE + MARGIN) * scale
     end

@@ -24,6 +24,7 @@ end
 
 -- draw ammunition bar
 local function DrawBar(x, y, value, scale)
+  value = math.min(value, 1)
   surface.SetTexture(BAR_TEXTURE)
 
   local w = BAR_WIDTH * scale
