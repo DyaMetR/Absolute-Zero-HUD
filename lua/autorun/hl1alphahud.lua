@@ -1,8 +1,8 @@
 --[[---------------------
 Half-life: Absolute Zero
     Heads Up Display
-     Version 1.1.2
-       26/09/21
+     Version 1.1.3
+       27/09/21
 By DyaMetR
 ]]-----------------------
 
@@ -10,7 +10,7 @@ By DyaMetR
 HL1AHUD = {}
 
 -- Version
-HL1AHUD.Version = '1.1.2'
+HL1AHUD.Version = '1.1.3'
 
 --[[------------------------------------------------------------------
   Correctly includes a file

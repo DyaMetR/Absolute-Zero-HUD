@@ -69,8 +69,11 @@ end
 
 -- do hook replace upon initializing every script
 hook.Add('PostGamemodeLoaded', 'unintrusive_bind_press', function()
-  if UnintrusiveBindPress.bindPress then return end -- do not replace again
-  UnintrusiveBindPress.bindPress = GAMEMODE.PlayerBindPress -- get original bind press
+  -- do not replace again
+  if not UnintrusiveBindPress.bindPress then
+    UnintrusiveBindPress.bindPress = GAMEMODE.PlayerBindPress -- get original bind press
+  end
+
   -- create a replacement function
   GAMEMODE.PlayerBindPress = function(self, _player, bind, pressed, code)
     -- go through each priority in order
