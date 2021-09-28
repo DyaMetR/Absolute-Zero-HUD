@@ -281,6 +281,8 @@ end
   Implementation
 ]]--------------------------------------------------------------------
 
+local hud_fastswitch = GetConVar('hud_fastswitch')
+
 -- sounds
 local UNABLE = 'hl1alphahud/wpn_denyselect.wav'
 local CANCEL = 'hl1alphahud/wpn_hudoff.wav'
@@ -326,7 +328,7 @@ end)
 
 -- select
 UnintrusiveBindPress.add('hl1alphahud', function(_player, bind, pressed, code)
-  if not HL1AHUD.IsEnabled() or not HL1AHUD.ShouldDrawWeaponSelector() then return end -- ignore if it shouldn't draw
+  if hud_fastswitch:GetBool() or LocalPlayer():InVehicle() or not HL1AHUD.IsEnabled() or not HL1AHUD.ShouldDrawWeaponSelector() then return end -- ignore if it shouldn't draw
   if not pressed then return end -- ignore if bind was not pressed
 
   -- check whether the physics gun is in use
