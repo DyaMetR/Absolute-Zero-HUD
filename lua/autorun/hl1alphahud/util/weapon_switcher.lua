@@ -361,8 +361,8 @@ UnintrusiveBindPress.add('hl1alphahud', function(_player, bind, pressed, code)
         emitSound(MOVE)
       end
       cycleSlot(slot)
+      return true
     end
-    return true
   end
 
   -- select
