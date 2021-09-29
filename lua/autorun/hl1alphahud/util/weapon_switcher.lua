@@ -351,12 +351,17 @@ UnintrusiveBindPress.add('hl1alphahud', function(_player, bind, pressed, code)
 
   -- cycle through slot
   if string.sub(bind, 1, 4) == SLOT then
-    if curSlot <= 0 then
-      emitSound(SLOT_SELECT)
-    else
-      emitSound(MOVE)
+    local slot = tonumber(string.sub(bind, 5))
+
+    -- ignore if we go out of bounds
+    if slot > 0 and slot <= MAX_SLOTS then
+      if curSlot <= 0 then
+        emitSound(SLOT_SELECT)
+      else
+        emitSound(MOVE)
+      end
+      cycleSlot(slot)
     end
-    cycleSlot(tonumber(string.sub(bind, 5)))
     return true
   end
 
