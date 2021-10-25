@@ -17,6 +17,7 @@ HL1AHUD.IncludeFile('config/convars.lua')
 HL1AHUD.IncludeFile('config/menu.lua')
 
 -- Utilities
+HL1AHUD.IncludeFile('util/hooks.lua')
 HL1AHUD.IncludeFile('util/sprites.lua')
 HL1AHUD.IncludeFile('util/numbers.lua')
 HL1AHUD.IncludeFile('util/weapon_icons.lua')

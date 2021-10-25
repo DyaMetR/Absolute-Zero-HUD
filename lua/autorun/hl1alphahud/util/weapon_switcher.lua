@@ -11,6 +11,7 @@ if SERVER then return end -- do not run on server
 local MAX_SLOTS = 6 -- maximum number of weapon slots
 
 -- Constants
+local SKIPEMPTY_HOOK = 'ShouldSkipEmptyWeapons'
 local PHYSICS_GUN, CAMERA = 'weapon_physgun', 'gmod_camera'
 local SLOT, INV_PREV, INV_NEXT, ATTACK, ATTACK2 = 'slot', 'invprev', 'invnext', '+attack', '+attack2'
 
@@ -30,9 +31,12 @@ end
 
 --[[------------------------------------------------------------------
   Whether empty weapons should be skipped by the selector
+  @param {Weapon} weapon
   @return {boolean} skip
 ]]--------------------------------------------------------------------
-local function skipEmpty()
+local function skipEmpty(weapon)
+  local override = HL1AHUD.RunHook(SKIPEMPTY_HOOK, weapon)
+  if override ~= nil then return override end
   return HL1AHUD.ShouldSkipEmptyWeapons()
 end
 
@@ -149,7 +153,7 @@ local function findWeapon(slot, pos, forward, inSlot)
   local weapons = #LocalPlayer():GetWeapons() -- current weapon count
   local noAmmo = 0 -- weapons with no ammunition left
   local weapon
-  while (not weapon or (not weapon:HasAmmo() and skipEmpty())) do
+  while (not weapon or (not weapon:HasAmmo() and skipEmpty(weapon))) do
     if forward then
       if pos < cacheLength[slot] then
         pos = pos + 1
@@ -236,26 +240,8 @@ local function cycleSlot(slot)
   -- position to search from
   local pos = curPos
 
-  -- if current slot is out of bounds
-  if curSlot <= 0 then
-    local weapon = LocalPlayer():GetActiveWeapon()
-    -- make sure weapon is on the cache
-    if not weaponPos[weapon] then
-      cacheWeapons(true)
-    end
-
-    -- if there are no weapons equipped, start at the first pos
-    if IsValid(weapon) and weapon:GetSlot() == slot - 1 then
-      pos = weaponPos[weapon] - 1
-    else
-      pos = 0
-    end
-  else
-    -- if the slot was different, reset pos
-    if curSlot ~= slot then
-      pos = 0
-    end
-  end
+  -- if slot is new, start from the beginning
+  if curSlot ~= slot then pos = 0 end
 
   -- search for weapon
   curSlot, curPos = findWeapon(slot, pos, true, true)
